@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+    <script src="lib/moment.min.js"></script>
+    <title>Productivity Tracker</title>
+  </head>
+  <body>
+
+    <div section="header">
+      <div class="header darken">
+        <h2>Productivity Time Manager 
+        </h2>
+        <h3>Manage Your Productivity today by choosing the type of learning you are doing then starting a session</h3>
+      </div>
+    </div>
+
+    <div section="main">
+      <div class="main-container">
+        <h1 id="timer">Start Session!</h1></h1>
+        <button id="toggle">Start</button>
+        <button id="reset">Reset</button>
+      </div>
+    </div>
+    <script type="text/javascript" src="js/stopwatch.js"></script>
+    <script type="text/javascript" src="js/session.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
+    <script>
+      moment().format();
+    </script>
+  </body>
+</html>
