@@ -2,6 +2,8 @@ function session() {
   var startTime = moment();
   var endTime;
 
+  //TODO: Clear up the function logic
+
   function updateTime() {
     time = moment().format("HH:mm:ss");
     return time;
@@ -16,14 +18,15 @@ function session() {
   // recording the ending time
   this.stop = function() {
     endTime = moment().format("HH:mm:ss");
-    var final = calculateSessionTime();
-    return final;
+    return endTime;
   };
 
-  // convert
+  this.calculateDuration = function() {
+    var duration = calculateSessionTime();
+    return duration;
+  };
 
   function calculateSessionTime() {
-    console.log(startTime);
     var duration = moment
       .utc(moment(endTime, "HH:mm:ss").diff(moment(startTime, "HH:mm:ss")))
       .format("HH:mm:ss");

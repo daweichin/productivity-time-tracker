@@ -4,29 +4,53 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Montserrat&display=swap"
+      rel="stylesheet"
+    />
     <script src="lib/moment.min.js"></script>
+    <script type="text/javascript" src="lib/jquery-3.4.1.min.js"></script>
     <title>Productivity Tracker</title>
   </head>
   <body>
-
     <div section="header">
       <div class="header darken">
-        <h2>Productivity Time Manager 
-        </h2>
-        <h3>Manage Your Productivity today by choosing the type of learning you are doing then starting a session</h3>
+        <h2>Productivity Time Manager</h2>
+        <button id="startBtn">
+          Get Started
+        </button>
       </div>
     </div>
 
-    <div section="main">
+    <div id="main" section="main">
       <div class="main-container">
-        <h1 id="timer">Start Session!</h1></h1>
+        <h1>Make the most of your time!</h1>
+        <form id="sessionType" action="">
+          Choose what you are doing now
+          <select name="sessions" id="sessionDropdown">
+            <option value="Active">Active</option>
+            <option value="Passive">Passive</option>
+            <option value="Chilling">Chilling</option>
+          </select>
+        </form>
         <button id="toggle">Start</button>
-        <button id="reset">Reset</button>
+        <h1 id="timer"></h1>
+        <div class="btnGroup">
+          <button id="check">Check all sessions</button>
+          <button id="reset">Reset Text</button>
+        </div>
+
+        <ol></ol>
       </div>
     </div>
-    <script type="text/javascript" src="js/stopwatch.js"></script>
+
+    <section id="footer">
+      <div class="footer">
+        Designed by DC
+      </div>
+    </section>
+
     <script type="text/javascript" src="js/session.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
     <script>
