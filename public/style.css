@@ -1,11 +1,26 @@
 html {
   scroll-behavior: smooth;
+  width: 100vw;
 }
 
 body {
   min-height: 100vh;
+  width: 100%;
   margin: 0;
   font-family: "Montserrat", sans-serif;
+  background-image: url(img/running.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+#mainNav {
+  background-color: rgba(0, 0, 0, 0);
+  padding: 20px 50px;
+}
+
+#mainNav .navbar-brand {
+  size: 2rem;
 }
 
 .header {
@@ -14,13 +29,29 @@ body {
   justify-content: center;
   align-items: center;
   padding: 20px;
-  background-image: url(img/running.jpg);
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
   opacity: 1;
   height: 100vh;
   text-align: center;
+}
+
+.about-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  opacity: 1;
+  height: 100vh;
+  text-align: center;
+}
+
+.about-header div {
+  width: 50vw;
+  padding: 0 2rem;
+}
+
+.about-header h2 {
+  color: white;
 }
 
 .header button {
@@ -52,8 +83,7 @@ h4 {
 }
 
 .darken {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-    url(img/running.jpg);
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
 }
 
 .main-container {
@@ -101,4 +131,42 @@ h4 {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.login-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  /* background-image: url(img/running.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center; */
+  opacity: 1;
+  height: 100vh;
+  text-align: left;
+  width: 100%;
+}
+
+.login-form {
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 33%;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.login-form,
+button {
+  margin: 5% 0;
+}
+
+.login-form h1 {
+  float: left;
+  color: white;
+  margin-bottom: 10px;
+  border-bottom: 2px solid white;
+  width: fit-content;
 }
