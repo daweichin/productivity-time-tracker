@@ -58,7 +58,8 @@ router.post("/login", function(req, res) {
     if (user) {
       res.send({
         success: true,
-        message: "user logged in as + " + firebase.auth().currentUser
+        message: "user logged in as + " + firebase.auth().currentUser,
+        email: user.userEmail
       });
     } else {
       console.log("user is logged out");

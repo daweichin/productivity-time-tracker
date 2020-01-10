@@ -33,7 +33,7 @@ $("#btnLogin").click(function() {
     success: function(data) {
       console.log(data.success);
       if (data.success) {
-        console.log(data.message);
+        console.log(data.email + " is logged in");
         window.location.replace("/landing.html");
       }
     },

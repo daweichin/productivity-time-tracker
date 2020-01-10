@@ -54,6 +54,9 @@
           <li class="nav-item">
             <a class="nav-link" href="about.html">About</a>
           </li>
+          <li class="nav-item ">
+            <a class="nav-link" href="login.html">Login</a>
+          </li>
           <li class="nav-item active">
             <a class="nav-link" href="landing.html">Profile</a>
           </li>
@@ -63,7 +66,7 @@
 
     <div id="main" section="main">
       <div class="main-container">
-        <h1>Make the most of your time!</h1>
+        <h1 id="currentUser"></h1>
         <form id="sessionType" action="">
           Choose what you are doing now
           <select name="sessions" id="sessionDropdown">
@@ -77,6 +80,9 @@
         <div class="btnGroup">
           <button id="check">Check all sessions</button>
           <button id="reset">Reset Text</button>
+          <button id="btnSignOut" class="btn btn-secondary hide">
+            Log Out
+          </button>
         </div>
 
         <ol></ol>
@@ -91,6 +97,8 @@
 
     <script type="text/javascript" src="js/session.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
+    <script type="text/javascript" src="js/login.js"></script>
+
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
     <script>
       moment().format();

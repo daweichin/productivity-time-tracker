@@ -8,46 +8,36 @@ var sessionOn = false;
 
 var tracker = [];
 
+checkCurrentUser();
+
 toggleBtn.addEventListener("click", function() {
   var timer = document.getElementById("timer");
 
-  function trackObject() {
-    this.props = {
-      trackstart: "",
-      trackend: "",
-      duration: "",
-      sessionType: ""
-    };
-  }
-
   if (!sessionOn) {
-    var trackObject = new trackObject();
-
-    // get the val of the session type
-    trackObject["sessionType"] = getSessionType();
+    // initialize starting variables
+    sessionType = getSessionType();
     startTime = session.start();
+    sessionOn = true;
+
+    //updating UI on page
     timer.textContent = "Session In Progress...";
     toggleBtn.textContent = "Stop";
-    sessionOn = true;
+    $("#sessionType").toggle();
+
+    // make ajax call to start session
+    startSession(sessionOn, startTime, sessionType);
   } else {
     // getting the final time and updating ui
     endTime = session.stop();
     duration = session.calculateDuration();
 
-    //updating text on screen
+    //updating UI on screen
     timer.textContent = "The session time was +" + duration;
+    $("#sessionType").toggle();
 
-    // storing session details in an object
-    trackObject["sessionType"] = getSessionType();
-    trackObject["trackstart"] = startTime;
-    trackObject["trackend"] = endTime;
-    trackObject["duration"] = duration;
-    console.log(trackObject);
+    // make ajax call to end session
+    endSession(endTime, duration);
 
-    // storing the session details in an array (for now)
-    // TODO: store the details into a local textfile
-    tracker.push(trackObject);
-    console.log(tracker);
     toggleBtn.textContent = "Start";
 
     // resetting the variables
@@ -86,3 +76,67 @@ $("#reset").click(function() {
     .children()
     .remove();
 });
+
+function checkCurrentUser() {
+  $.ajax({
+    url: "checkCurrentUser",
+    type: "GET",
+    dataType: "json",
+    success: function(data) {
+      if (data.userEmail != null) {
+        $("#currentUser").text("The current user is " + data.userEmail);
+        console.log("the current user is " + data.userEmail);
+      } else {
+        $("#currentUser").text("");
+      }
+    }
+  });
+}
+
+$("#btnSignOut").click(function() {
+  console.log("sign out clicked");
+  $.ajax({
+    url: "signout",
+    type: "POST",
+    success: () => {
+      checkCurrentUser();
+    }
+  });
+});
+
+function handleData(data) {
+  console.log(data);
+}
+
+function startSession(sessionOn, startTime, sessionType) {
+  $.ajax({
+    url: "startSession",
+    type: "POST",
+    data: {
+      sessionOn: sessionOn,
+      startTime: startTime,
+      sessionType: sessionType
+    },
+    dataType: "json",
+    success: function(data) {
+      console.log("the current sesssion is " + data);
+      handleData(data);
+    }
+  });
+}
+
+function endSession(endTime, duration) {
+  $.ajax({
+    url: "endSession",
+    type: "POST",
+    data: {
+      endTime: endTime,
+      duration: duration
+    },
+    dataType: "json",
+    success: function(data) {
+      console.log("the current sesssion is " + data);
+      handleData(data);
+    }
+  });
+}
