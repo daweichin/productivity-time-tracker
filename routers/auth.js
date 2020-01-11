@@ -26,7 +26,6 @@ const database = firebase.database();
 router.get("/test", (req, res) => res.json({ msg: "Users Works" }));
 
 router.post("/createUser", function(req, res) {
-  res.send(console.log("creating user"));
   userEmail = req.body.userEmail;
   userPassword = req.body.userPassword;
 
@@ -38,6 +37,7 @@ router.post("/createUser", function(req, res) {
       var errorMessage = error.message;
       // ...
     });
+  res.send(console.log("creating user" + userEmail));
 });
 
 router.post("/login", function(req, res) {

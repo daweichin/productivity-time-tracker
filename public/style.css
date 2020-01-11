@@ -12,11 +12,16 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
+  transition: 1s ease-in;
 }
 
 #mainNav {
-  background-color: rgba(0, 0, 0, 0);
-  padding: 20px 50px;
+  padding: 0px 20px;
+  background-color: #000;
+}
+
+#mainNav .navbar-dark {
+  background-color: #000;
 }
 
 #mainNav .navbar-brand {
