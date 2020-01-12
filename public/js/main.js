@@ -8,15 +8,20 @@ var sessionOn = false;
 
 var tracker = [];
 
+// initializing functions
+// check for current user and current session state
+// if the state is true then btn should be 'stop'
 checkCurrentUser();
 
 toggleBtn.addEventListener("click", function() {
   var timer = document.getElementById("timer");
+  this.classList.toggle("btn-danger");
 
   if (!sessionOn) {
     // initialize starting variables
     sessionType = getSessionType();
     startTime = session.start();
+    date = session.date();
     sessionOn = true;
 
     //updating UI on page
@@ -25,7 +30,7 @@ toggleBtn.addEventListener("click", function() {
     $("#sessionType").toggle();
 
     // make ajax call to start session
-    startSession(sessionOn, startTime, sessionType);
+    startSession(sessionOn, startTime, sessionType, date);
   } else {
     // getting the final time and updating ui
     endTime = session.stop();
@@ -45,30 +50,14 @@ toggleBtn.addEventListener("click", function() {
   }
 });
 
-checkbtn.addEventListener("click", function() {
-  updateSessionText(tracker);
-});
-
 function getSessionType() {
   return $("#sessionDropdown option:selected").val();
 }
 
+// smooth scrolling effect
 $("#startBtn").click(function() {
   document.getElementById("main").scrollIntoView();
 });
-
-sessionText = [];
-function updateSessionText(e) {
-  for (var i = 0; i < e.length; i++) {
-    var sessionType = e[i].sessionType;
-    var duration = e[i].duration;
-    text = "Session Type: " + sessionType + " | Duration: " + duration;
-
-    // create a new li and add to list
-    $("ol").append("<li>" + text + "</li>");
-  }
-  return sessionText;
-}
 
 $("#reset").click(function() {
   console.log("reset button clicked");
@@ -108,14 +97,15 @@ function handleData(data) {
   console.log(data);
 }
 
-function startSession(sessionOn, startTime, sessionType) {
+function startSession(sessionOn, startTime, sessionType, date) {
   $.ajax({
     url: "startSession",
     type: "POST",
     data: {
       sessionOn: sessionOn,
       startTime: startTime,
-      sessionType: sessionType
+      sessionType: sessionType,
+      date: date
     },
     dataType: "json",
     success: function(data) {
@@ -140,3 +130,49 @@ function endSession(endTime, duration) {
     }
   });
 }
+
+// Retrieve sessions from a given date
+checkbtn.addEventListener("click", function() {
+  function getSessions() {
+    // ajax call to get data from firebase
+    $.ajax({
+      url: "getSession",
+      type: "GET",
+      dataType: "json",
+      success: function(data) {
+        updateSessionText(data);
+      }
+    });
+
+    function updateSessionText(data) {
+      var my_obj_str = JSON.stringify(data);
+      var parsed_data = my_obj_str[0];
+
+      for (var key in parsed_data) {
+        if (parsed_data.hasOwnProperty(key)) {
+          firstProp = parsed_data[key];
+          console.log(firstProp.trackstart);
+          break;
+        }
+      }
+      console.log(my_obj_str);
+      $("p").text(my_obj_str);
+      // for (var i = 0; i < data.length; i++) {
+      //   var sessionType = e[i].sessionType;
+      //   var duration = e[i].duration;
+
+      //   text =
+      //   "Session Type: " +
+      //   firstProp.sessionType +
+      //   " | Duration: " +
+      //   firstProp.duration;
+
+      // // create a new li and add to list
+      // $("ol").append("<li>" + text + "</li>");
+      // }
+      // return sessionText;
+    }
+  }
+
+  getSessions();
+});

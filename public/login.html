@@ -10,6 +10,7 @@
       integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
       crossorigin="anonymous"
     />
+    <link rel="stylesheet" href="css/fontawesome-free-5.12.0-web/css/all.css" />
     <link rel="stylesheet" href="style.css" />
     <link
       href="https://fonts.googleapis.com/css?family=Montserrat&display=swap"
@@ -22,7 +23,7 @@
 
     <nav
       id="mainNav"
-      class="navbar navbar-expand-lg navbar-dark navbar-fixed-top"
+      class="navbar navbar-expand-lg navbar-dark"
     >
       <a class="navbar-brand" href="index.html">Navbar</a>
       <button
@@ -43,7 +44,10 @@
               >Home <span class="sr-only">(current)</span></a
             >
           </li>
-          <li class="nav-item active">
+          <li class="nav-item">
+            <a class="nav-link" href="about.html">About</a>
+          </li>
+          <li class="nav-item ">
             <a class="nav-link" href="login.html">Login</a>
           </li>
         </ul>
@@ -51,27 +55,28 @@
     </nav>
 
 
-    <div class="container">
       <div class="login-container">
 
         <div class="login-form">
           <h1>Login</h1>
           <input type="email" id="txtEmail" placeholder="Email" />
           <input type="password" id="txtPassword" placeholder="Password" />
-          <button id="btnLogin" class="btn btn-secondary" >Log In</button>
-          <button id="btnSignUp" class="btn btn-secondary">Sign Up</button>
-          <button id="btnSignOut" class="btn btn-secondary hide">Log Out</button>
+          <button id="btnLogin" class="btn btn-primary" >Log In</button>
+          <button id="btnSignUp" class="btn btn-primary">Sign Up</button>
+ 
           <h2 id="currentUser"></h2>
        </div>
        </div>
-      </div>
 
       
-    <section id="footer">
       <div class="footer">
-        Designed by DC
+        Website by DC
+        <div id="social-links">
+          <a href="https://github.com/domainance"
+            ><i class="fab fa-github"></i
+          ></a>
+        </div>
       </div>
-    </section>
     </div>
 
     <script type="text/javascript" src="lib/jquery-3.4.1.min.js"></script>

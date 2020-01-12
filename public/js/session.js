@@ -26,6 +26,11 @@ function session() {
     return duration;
   };
 
+  this.date = function() {
+    date = moment().format("Do MMMM YYYY");
+    return date;
+  };
+
   function calculateSessionTime() {
     var duration = moment
       .utc(moment(endTime, "HH:mm:ss").diff(moment(startTime, "HH:mm:ss")))

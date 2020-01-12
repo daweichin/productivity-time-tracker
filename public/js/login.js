@@ -50,6 +50,7 @@ $("#btnSignOut").click(function() {
     type: "POST",
     success: () => {
       console.log("log out success");
+      window.location.replace("/login.html");
     }
   });
 });

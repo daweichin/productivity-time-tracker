@@ -37,6 +37,7 @@ router.post("/createUser", function(req, res) {
       var errorMessage = error.message;
       // ...
     });
+
   res.send(console.log("creating user" + userEmail));
 });
 
@@ -47,6 +48,24 @@ router.post("/login", function(req, res) {
   firebase
     .auth()
     .signInWithEmailAndPassword(userEmail, userPassword)
+    .then(() => {
+      firebase
+        .database()
+        .ref("users/" + auth.currentUser.uid)
+        .set({
+          uid: auth.currentUser.uid,
+          email: userEmail
+        });
+      if (auth.currentUser) {
+        res.json({
+          success: true,
+          message: "user logged in as + " + firebase.auth().currentUser,
+          email: auth.currentUser.userEmail
+        });
+      } else {
+        console.log("user has changed");
+      }
+    })
     .catch(function(error) {
       // Handle Errors here.
       var errorCode = error.code;
@@ -54,17 +73,21 @@ router.post("/login", function(req, res) {
       console.log(errorMessage);
     });
 
-  firebase.auth().onAuthStateChanged(function(user) {
-    if (user) {
-      res.send({
-        success: true,
-        message: "user logged in as + " + firebase.auth().currentUser,
-        email: user.userEmail
-      });
-    } else {
-      console.log("user is logged out");
-    }
-  });
+  // reason why this breaks is because its an event listener  attached to a global scope auth() object?
+  // firebase.auth().onAuthStateChanged(function(user) {
+  //   if (user) {
+  //     res.json({
+  //       success: true,
+  //       message: "user logged in as + " + firebase.auth().currentUser,
+  //       email: user.userEmail
+  //     });
+  //   } else {
+  //     console.log("user has changed");
+  //   }
+  // });
+
+  // not sure why i need this
+  return;
 });
 
 router.post("/signout", function(req, req) {

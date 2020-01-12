@@ -40,20 +40,41 @@ var trackObject = {
 };
 
 router.post("/startSession", function(req, res) {
-  sessionId = parseInt(trackObject.sessionId) + 1;
-
-  // get the val of the session type
-  trackObject.sessionType = req.body.sessionType;
-  trackObject.trackstart = req.body.startTime;
-  trackObject.sessionId = sessionId;
-
+  // firebase current userid
   userId = auth.currentUser.uid;
 
+  // finding previous session ID value so as to not overwrite previous sessions if they exist
+  // var previousSessionId = firebase
+  //   .database()
+  //   .ref("users/" + userId + "/" + trackObject.date + "/sessions")
+  //   .once("value")
+  //   .then(function(snapshot) {
+  //     snapshot.val().sessionId;
+  //   });
+
+  // create new sessionId variable by incrementing 1
+  // sessionId = parseInt(previousSessionId) + 1;
+
+  // assign req params to temp object
+  trackObject.sessionType = req.body.sessionType;
+  trackObject.trackstart = req.body.startTime;
+  // trackObject.sessionId = sessionId;
+  trackObject.date = req.body.date;
+
+  // writing request to firebase
   firebase
     .database()
-    .ref("users/" + userId + "/sessions/" + trackObject.sessionId)
+    .ref(
+      "sessions/" +
+        userId +
+        "/" +
+        trackObject.date +
+        "/" +
+        trackObject.trackstart
+    )
     .set(trackObject);
 
+  // sending back object to frontend for debug purposes
   res.json(trackObject);
 });
 
@@ -63,13 +84,31 @@ router.post("/endSession", function(req, res) {
 
   firebase
     .database()
-    .ref("users/" + userId + "/sessions/" + trackObject.sessionId)
+    .ref(
+      "sessions/" +
+        userId +
+        "/" +
+        trackObject.date +
+        "/" +
+        trackObject.trackstart
+    )
     .set(trackObject);
 
   console.log(trackObject);
   res.send(trackObject);
 
   // send this trackObject off to the database
+});
+
+router.get("/getSession", function(req, res) {
+  userId = auth.currentUser.uid;
+  var test = database.ref("sessions/" + userId);
+  test.on("value", function(snapshot) {
+    array = [];
+    array.push(snapshot.val());
+    console.log(array);
+    res.json(array);
+  });
 });
 
 function writeUserData(userId, name, email, imageUrl) {

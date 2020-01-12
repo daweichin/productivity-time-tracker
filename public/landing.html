@@ -67,25 +67,34 @@
     <div id="main" section="main">
       <div class="main-container">
         <h1 id="currentUser"></h1>
-        <form id="sessionType" action="">
-          Choose what you are doing now
-          <select name="sessions" id="sessionDropdown">
+        <h1>How are you using your time?</h1>
+        <form id="sessionType" action="" class="form-group">
+          <select
+            name="sessions"
+            id="sessionDropdown"
+            class="form-control form-control-lg"
+          >
             <option value="Active">Active</option>
             <option value="Passive">Passive</option>
             <option value="Chilling">Chilling</option>
           </select>
         </form>
-        <button id="toggle">Start</button>
+        <button id="toggle" class="btn btn-success">Start</button>
         <h1 id="timer"></h1>
         <div class="btnGroup">
-          <button id="check">Check all sessions</button>
-          <button id="reset">Reset Text</button>
+          <button id="check" class="btn btn-secondary ">
+            Check all sessions
+          </button>
+          <button id="reset" class="btn btn-danger ">
+            Reset Text (inactive)
+          </button>
           <button id="btnSignOut" class="btn btn-secondary hide">
             Log Out
           </button>
         </div>
 
         <ol></ol>
+        <p></p>
       </div>
     </div>
 

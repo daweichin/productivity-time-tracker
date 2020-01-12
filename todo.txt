@@ -12,17 +12,17 @@ Done
 
 In Progress
 
-6. Add firebase auth + database and make it possible for a user to login with a certain ID and store sessions
+Core TODO
 
-Routing the app - index --> login --> landing page 
+-- Fix up UI and make things look good
+-- Format data properly for given day to 
+-- Simple chart comparing %'s between different categories of time
+-- When a user logs in, if their sessionOn = true, toggle the start button
 
 
-Todo
+Features TODO
 
-Fix up UI and make things look good
-
-4. add 'about' page to explain why i decided to build this and fill it out
-
+-- Make it possible to load data from specific day and create graphs / analytics
 
 
 
