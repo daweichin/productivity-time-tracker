@@ -12,16 +12,39 @@ require("firebase/database");
 const auth = firebase.auth();
 const database = firebase.database();
 
-router.get("/getAllSessions", (req, res) => res.json({ test: "test" }));
-
 router.get("/checkCurrentUser", function(req, res) {
   if (auth.currentUser) {
-    res.json({
-      userId: auth.currentUser.uid,
-      userEmail: auth.currentUser.email
-    });
+    firebase
+      .database()
+      .ref("users/" + auth.currentUser.uid)
+      .once("value", function(snapshot) {
+        callback(snapshot);
+      });
   } else {
     res.json({ error: "error has occured" });
+  }
+
+  function callback(snapshot) {
+    console.log(snapshot.val());
+    temp = snapshot.val();
+    var sessionOn = temp.sessionOn;
+    var sessionId = temp.sessionId;
+    var userId = firebase.auth().currentUser.uid;
+    console.log(
+      "The current session is " +
+        sessionOn +
+        "with current session id being " +
+        sessionId +
+        "and the user is " +
+        userId
+    );
+
+    res.json({
+      userId: userId,
+      userEmail: auth.currentUser.email,
+      sessionOn: sessionOn,
+      sessionId: sessionId
+    });
   }
 });
 
@@ -36,45 +59,35 @@ var trackObject = {
   duration: "",
   sessionType: "",
   sessionId: 0,
-  sessionOn: false
+  sessionOn: false,
+  userId: ""
 };
 
 router.post("/startSession", function(req, res) {
-  // firebase current userid
-  userId = auth.currentUser.uid;
-
-  // finding previous session ID value so as to not overwrite previous sessions if they exist
-  // var previousSessionId = firebase
-  //   .database()
-  //   .ref("users/" + userId + "/" + trackObject.date + "/sessions")
-  //   .once("value")
-  //   .then(function(snapshot) {
-  //     snapshot.val().sessionId;
-  //   });
-
-  // create new sessionId variable by incrementing 1
-  // sessionId = parseInt(previousSessionId) + 1;
-
+  console.log(req.body);
   // assign req params to temp object
   trackObject.sessionType = req.body.sessionType;
   trackObject.trackstart = req.body.startTime;
-  // trackObject.sessionId = sessionId;
+  trackObject.sessionId = req.body.sessionId;
   trackObject.date = req.body.date;
+  trackObject.userId = req.body.userId;
 
-  // writing request to firebase
+  console.log("Starting session " + trackObject.sessionId);
+
+  //set sessionOn variable attached to user as on
   firebase
     .database()
-    .ref(
-      "sessions/" +
-        userId +
-        "/" +
-        trackObject.date +
-        "/" +
-        trackObject.trackstart
-    )
+    .ref("users/" + auth.currentUser.uid + "/sessionOn")
+    .set(true);
+
+  // writing request to firebase sessions node
+  firebase
+    .database()
+    .ref("/sessions/" + trackObject.userId + "/" + trackObject.sessionId)
     .set(trackObject);
 
-  // sending back object to frontend for debug purposes
+  // sending back object to frontend for debug purposes and event lifecycle handling
+  console.log("start object:" + trackObject);
   res.json(trackObject);
 });
 
@@ -82,28 +95,33 @@ router.post("/endSession", function(req, res) {
   trackObject.trackend = req.body.endTime;
   trackObject.duration = req.body.duration;
 
+  //set sessionOn variable attached to user as off
   firebase
     .database()
-    .ref(
-      "sessions/" +
-        userId +
-        "/" +
-        trackObject.date +
-        "/" +
-        trackObject.trackstart
-    )
+    .ref("users/" + auth.currentUser.uid + "/sessionOn")
+    .set(false);
+
+  // increment session by 1
+  trackObject.sessionId = parseInt(trackObject.sessionId) + 1;
+  firebase
+    .database()
+    .ref("users/" + auth.currentUser.uid + "/sessionId")
+    .set(trackObject.sessionId);
+
+  // update session
+  firebase
+    .database()
+    .ref("sessions/" + trackObject.userId + "/" + trackObject.sessionId)
     .set(trackObject);
 
-  console.log(trackObject);
+  console.log("end object:" + trackObject);
   res.send(trackObject);
-
-  // send this trackObject off to the database
 });
 
 router.get("/getSession", function(req, res) {
   userId = auth.currentUser.uid;
   var test = database.ref("sessions/" + userId);
-  test.on("value", function(snapshot) {
+  test.once("value", function(snapshot) {
     array = [];
     array.push(snapshot.val());
     console.log(array);

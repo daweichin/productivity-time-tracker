@@ -185,3 +185,13 @@ button {
   border-bottom: 2px solid white;
   width: fit-content;
 }
+
+.login-container h3 {
+  color: red;
+}
+
+/* Landing CSS */
+
+.table {
+  margin: 20px 0;
+}

@@ -28,17 +28,30 @@ router.get("/test", (req, res) => res.json({ msg: "Users Works" }));
 router.post("/createUser", function(req, res) {
   userEmail = req.body.userEmail;
   userPassword = req.body.userPassword;
-
   auth
     .createUserWithEmailAndPassword(userEmail, userPassword)
+    .then(function(user) {
+      console.log("entered sign up loop");
+      console.log(auth.currentUser.uid);
+      firebase
+        .database()
+        .ref("users/" + auth.currentUser.uid)
+        .set({
+          uid: auth.currentUser.uid,
+          email: userEmail,
+          sessionOn: false,
+          sessionId: 0
+        });
+      console.log("user signed up ");
+      // TODO:: Implement res.redirect()
+    })
     .catch(function(error) {
       // Handle Errors here.
       var errorCode = error.code;
       var errorMessage = error.message;
       // ...
+      console.log(errorMessage);
     });
-
-  res.send(console.log("creating user" + userEmail));
 });
 
 router.post("/login", function(req, res) {
@@ -48,14 +61,7 @@ router.post("/login", function(req, res) {
   firebase
     .auth()
     .signInWithEmailAndPassword(userEmail, userPassword)
-    .then(() => {
-      firebase
-        .database()
-        .ref("users/" + auth.currentUser.uid)
-        .set({
-          uid: auth.currentUser.uid,
-          email: userEmail
-        });
+    .then(function() {
       if (auth.currentUser) {
         res.json({
           success: true,
@@ -63,31 +69,16 @@ router.post("/login", function(req, res) {
           email: auth.currentUser.userEmail
         });
       } else {
-        console.log("user has changed");
+        res.send("user has changed");
       }
     })
     .catch(function(error) {
       // Handle Errors here.
       var errorCode = error.code;
       var errorMessage = error.message;
-      console.log(errorMessage);
+      // ...
+      res.send({ error: errorMessage });
     });
-
-  // reason why this breaks is because its an event listener  attached to a global scope auth() object?
-  // firebase.auth().onAuthStateChanged(function(user) {
-  //   if (user) {
-  //     res.json({
-  //       success: true,
-  //       message: "user logged in as + " + firebase.auth().currentUser,
-  //       email: user.userEmail
-  //     });
-  //   } else {
-  //     console.log("user has changed");
-  //   }
-  // });
-
-  // not sure why i need this
-  return;
 });
 
 router.post("/signout", function(req, req) {
@@ -101,6 +92,7 @@ router.post("/signout", function(req, req) {
     .catch(function(error) {
       // An error happened.
     });
+  res.send(console.log("signed out"));
 });
 
 module.exports = router;

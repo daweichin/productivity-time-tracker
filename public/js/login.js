@@ -35,6 +35,10 @@ $("#btnLogin").click(function() {
       if (data.success) {
         console.log(data.email + " is logged in");
         window.location.replace("/landing.html");
+      } else {
+        // update a text to say login failed
+        $("#loginFailed").text("Login Failed");
+        $("#errormsg").text(data.error);
       }
     },
     error: function(errorMessage) {

@@ -1,6 +1,10 @@
 html {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+
   scroll-behavior: smooth;
-  width: 100vw;
+  width: 100%;
 }
 
 body {
@@ -10,6 +14,9 @@ body {
   font-family: "Montserrat", sans-serif;
 }
 
+/*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
+/* Navbar CSS  */
+/*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
 #mainNav {
   padding: 0px 20px;
   background-color: #000;
@@ -88,7 +95,7 @@ body {
 }
 
 .header h2,
-h4 {
+.header h4 {
   color: #f9f9f9;
   font-size: 2rem;
   font-weight: 600;
@@ -134,8 +141,11 @@ h4 {
   text-align: center;
 }
 
+/*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
+/* Footer CSS  */
+/*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
 .footer {
-  height: 200px;
+  height: 10vh;
   background-color: white;
   color: black;
   margin: 0 auto;
@@ -144,6 +154,10 @@ h4 {
   justify-content: center;
   align-items: center;
 }
+
+/*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
+/* Login CSS  */
+/*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
 
 .login-container {
   display: flex;
@@ -156,23 +170,24 @@ h4 {
   background-size: cover;
   background-position: center; */
   opacity: 1;
-  height: 100vh;
+  height: 80vh;
   text-align: left;
   width: 100%;
 }
 
 .login-form {
-  padding: 30px;
+  padding: 50px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 50%;
+  max-width: 600px;
   background: rgba(0, 0, 0, 0.5);
+  border-radius: 10%;
 }
 
 .login-form,
 button {
-  margin: 5% 0;
+  margin: 20px 0 0 0;
 }
 
 .login-form h1 {
@@ -181,4 +196,8 @@ button {
   margin-bottom: 10px;
   border-bottom: 2px solid white;
   width: fit-content;
+}
+
+.login-form h4 {
+  font-size: 1rem;
 }
