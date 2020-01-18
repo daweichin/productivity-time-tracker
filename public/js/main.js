@@ -33,7 +33,6 @@ toggleBtn.addEventListener("click", function() {
     //updating UI on page
     timer.textContent = "Session In Progress...";
     toggleBtn.textContent = "Stop";
-    $("#sessionType").toggle();
 
     // getting the current session ID
     sessionId = tempData.sessionId;
@@ -45,17 +44,13 @@ toggleBtn.addEventListener("click", function() {
   } else {
     // getting the final time and updating ui
     endTime = session.stop();
-    duration = session.calculateDuration();
-
-    //updating UI on screen
-    timer.textContent = "The session time was +" + duration;
-    $("#sessionType").toggle();
+    // duration = session.calculateDuration();
 
     // make ajax call to end session
     // once session is ended: increment sessionId by 1
-    endSession(endTime, duration);
+    endSession(endTime);
 
-    toggleBtn.textContent = "Start";
+    //updating UI on screen
 
     // resetting the variables
     sessionOn = false;
@@ -75,10 +70,16 @@ function checkCurrentUser() {
       if (data.userEmail != null) {
         //update UI
         $("#currentUser").text("The current user is " + data.userEmail);
+        $("#no-auth").css({ display: "none" });
+        $("#btnSignIn").css({ display: "none" });
+        getSessions();
+
         //update temp variables
         handleData(data);
       } else {
-        $("#currentUser").text("Please log in to store sessions");
+        $("#btnSignOut").css({ display: "none" });
+        $("#btnSignIn").css({ display: "block" });
+        $(".main-container").css({ display: "none" });
       }
     }
   });
@@ -110,6 +111,7 @@ $("#btnSignOut").click(function() {
   });
 });
 
+// start session gets called when button is clicked
 function startSession(startTime, sessionType, sessionId, date, userId) {
   $.ajax({
     url: "startSession",
@@ -128,68 +130,70 @@ function startSession(startTime, sessionType, sessionId, date, userId) {
   });
 }
 
-function endSession(endTime, duration) {
+// end a current session
+function endSession(endTime) {
   $.ajax({
     url: "endSession",
     type: "POST",
     data: {
-      endTime: endTime,
-      duration: duration
+      endTime: endTime
     },
     dataType: "json",
     success: function(data) {
-      console.log("the current sesssion is " + data);
+      timer.textContent = "The session time was +" + data.duration;
+      toggleBtn.textContent = "Start";
     }
   });
 }
 
 // Retrieve sessions from a given date
 
-checkbtn.addEventListener("click", function() {
-  function getSessions() {
-    // ajax call to get data from firebase
-    $.ajax({
-      url: "getSession",
-      type: "GET",
-      dataType: "json",
-      success: function(data) {
-        updateSessionText(data);
-      }
-    });
-
-    function updateSessionText(data) {
-      var my_obj_str = data;
-      var arr = my_obj_str[0];
-
-      for (var i = 0; i < arr.length; i++) {
-        props = arr[i];
-        var id = props.sessionId;
-        var duration = props.duration;
-        var date = props.date;
-        var start = props.trackstart;
-        var end = props.trackend;
-        var type = props.sessionType;
-        markup =
-          "<tr><td>" +
-          id +
-          "</td><td>" +
-          date +
-          "</td><td>" +
-          start +
-          "</td><td>" +
-          end +
-          "</td><td>" +
-          duration +
-          "</td><td>" +
-          type;
-        ("</td></tr>");
-        $("table tbody").append(markup);
-      }
-
-      console.log(my_obj_str);
+function getSessions() {
+  // ajax call to get data from firebase
+  $.ajax({
+    url: "getSession",
+    type: "GET",
+    dataType: "json",
+    success: function(data) {
+      updateSessionText(data);
     }
-  }
+  });
 
+  function updateSessionText(data) {
+    var my_obj_str = data;
+    var arr = my_obj_str[0];
+
+    // mapping props to table --> probably could have used .map() function
+    for (var i = 0; i < arr.length; i++) {
+      props = arr[i];
+      var id = props.sessionId;
+      var duration = props.duration;
+      var date = props.date;
+      var start = props.trackstart;
+      var end = props.trackend;
+      var type = props.sessionType;
+      markup =
+        "<tr><td>" +
+        id +
+        "</td><td>" +
+        date +
+        "</td><td>" +
+        start +
+        "</td><td>" +
+        end +
+        "</td><td>" +
+        duration +
+        "</td><td>" +
+        type;
+      ("</td></tr>");
+      $("table tbody").append(markup);
+    }
+
+    console.log(my_obj_str);
+  }
+}
+
+checkbtn.addEventListener("click", function() {
   getSessions();
 });
 

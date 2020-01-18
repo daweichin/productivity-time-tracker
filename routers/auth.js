@@ -50,7 +50,7 @@ router.post("/createUser", function(req, res) {
       var errorCode = error.code;
       var errorMessage = error.message;
       // ...
-      console.log(errorMessage);
+      res.send({ error: errorMessage });
     });
 });
 
@@ -81,18 +81,17 @@ router.post("/login", function(req, res) {
     });
 });
 
-router.post("/signout", function(req, req) {
-  console.log("signing out");
+router.post("/signout", function(res, req) {
   firebase
     .auth()
     .signOut()
     .then(function() {
       // Sign-out successful.
+      console.log("sign out successfull");
     })
     .catch(function(error) {
-      // An error happened.
+      res.send(console.log("signed out"));
     });
-  res.send(console.log("signed out"));
 });
 
 module.exports = router;

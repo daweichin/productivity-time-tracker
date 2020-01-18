@@ -4,7 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="img/favicon_io/favicon.ico"
+    />
+    <link rel="stylesheet" href="css/fontawesome-free-5.12.0-web/css/all.css" />
+    <link rel="stylesheet" href="css/style.css" />
     <link
       href="https://fonts.googleapis.com/css?family=Montserrat&display=swap"
       rel="stylesheet"
@@ -52,34 +59,39 @@
       </div>
     </nav>
 
-    <div section="main">
-      <div class="about-header darken">
-        <div>
-          <h2>About</h2>
+    <section class="about">
+      <div class="header">
+        <h2>About this app</h2>
+        <div class="20">
+          This app was built to track how much time I spend doing a specific
+          type of activity. In particular this was motivated by a want to track
+          exactly how much time I was spending learning things passively (eg:
+          watching online courses, youtube videos etc) compared to actively
+          (attemping to build things).
         </div>
-        <div>
-          <h4>
-            Time is your most valuable asset so it makes sense to record how you
-            are
-            <strong>actually</strong> spending your time! (And not just how you
-            say you will from your calendar app). Try out this app for a few
-            days and see productive you are in a typical day.
-          </h4>
-          <h4>
-            <ul>
-              Assumptions
-              <li>
-                You do not start a session before midnight and end after
-                midnight
-              </li>
-            </ul>
-          </h4>
+        <br />
+        <div class="20">
+          The ultimate goal is to be able to compare the about of time spent
+          doing each type of learning and find a good balance between the two,
+          and also spending time away from learning/working which I denoted by
+          "chilling".
+        </div>
+        <br />
+        <div class="20">
+          To see the app's current functionality, log in with a public account:
+          user: test@test.com pw: 123456 , and if you are interested in storing
+          your details you can create an account for yourself.
         </div>
       </div>
-    </div>
+    </section>
 
-    <script>
-      moment().format();
-    </script>
+    <div class="footer">
+      Website by DC
+      <div id="social-links">
+        <a href="https://github.com/domainance"
+          ><i class="fab fa-github"></i
+        ></a>
+      </div>
+    </div>
   </body>
 </html>

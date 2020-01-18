@@ -1,6 +1,8 @@
 var firebase = require("firebase/app");
 const express = require("express");
 const bodyParser = require("body-parser");
+var moment = require("moment");
+moment().format();
 
 const router = express.Router();
 
@@ -53,15 +55,7 @@ router.get("/checkCurrentUser", function(req, res) {
 // Needs a rename
 
 //store sessionId variable on the database
-var trackObject = {
-  trackstart: "",
-  trackend: "",
-  duration: "",
-  sessionType: "",
-  sessionId: 0,
-  sessionOn: false,
-  userId: ""
-};
+var trackObject = {};
 
 router.post("/startSession", function(req, res) {
   console.log(req.body);
@@ -91,9 +85,28 @@ router.post("/startSession", function(req, res) {
   res.json(trackObject);
 });
 
+// End session API
 router.post("/endSession", function(req, res) {
+  database
+    .ref("/sessions/" + trackObject.userId + "/" + trackObject.sessionId)
+    .once("value", function(snapshot) {
+      trackObject = snapshot.val();
+    });
+
   trackObject.trackend = req.body.endTime;
-  trackObject.duration = req.body.duration;
+
+  // calculate duration here
+
+  var duration = moment
+    .utc(
+      moment(trackObject.trackend, "HH:mm:ss").diff(
+        moment(trackObject.trackstart, "HH:mm:ss")
+      )
+    )
+    .format("HH:mm:ss");
+
+  console.log(duration);
+  trackObject.duration = duration;
 
   //set sessionOn variable attached to user as off
   firebase
@@ -101,18 +114,18 @@ router.post("/endSession", function(req, res) {
     .ref("users/" + auth.currentUser.uid + "/sessionOn")
     .set(false);
 
+  // update session
+  firebase
+    .database()
+    .ref("sessions/" + trackObject.userId + "/" + trackObject.sessionId)
+    .set(trackObject);
+
   // increment session by 1
   trackObject.sessionId = parseInt(trackObject.sessionId) + 1;
   firebase
     .database()
     .ref("users/" + auth.currentUser.uid + "/sessionId")
     .set(trackObject.sessionId);
-
-  // update session
-  firebase
-    .database()
-    .ref("sessions/" + trackObject.userId + "/" + trackObject.sessionId)
-    .set(trackObject);
 
   console.log("end object:" + trackObject);
   res.send(trackObject);

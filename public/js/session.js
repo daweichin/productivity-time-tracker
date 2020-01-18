@@ -21,23 +21,23 @@ function session() {
     return endTime;
   };
 
-  this.calculateDuration = function() {
-    var duration = calculateSessionTime();
-    return duration;
-  };
+  // this.calculateDuration = function() {
+  //   var duration = calculateSessionTime();
+  //   return duration;
+  // };
 
   this.date = function() {
     date = moment().format("Do MMMM YYYY");
     return date;
   };
 
-  function calculateSessionTime() {
-    var duration = moment
-      .utc(moment(endTime, "HH:mm:ss").diff(moment(startTime, "HH:mm:ss")))
-      .format("HH:mm:ss");
+  // function calculateSessionTime() {
+  //   var duration = moment
+  //     .utc(moment(endTime, "HH:mm:ss").diff(moment(startTime, "HH:mm:ss")))
+  //     .format("HH:mm:ss");
 
-    console.log(startTime, endTime);
-    console.log(duration);
-    return duration;
-  }
+  //   console.log(startTime, endTime);
+  //   console.log(duration);
+  //   return duration;
+  // }
 }

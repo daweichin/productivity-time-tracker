@@ -2,7 +2,6 @@ html {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-
   scroll-behavior: smooth;
   width: 100%;
 }
@@ -20,6 +19,7 @@ body {
 #mainNav {
   padding: 0px 20px;
   background-color: #000;
+  min-height: 10vh;
 }
 
 #mainNav .navbar-dark {
@@ -30,6 +30,10 @@ body {
   size: 2rem;
 }
 
+/*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
+/* Main Page CSS  */
+/*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
+
 .header {
   display: flex;
   flex-direction: column;
@@ -37,41 +41,12 @@ body {
   align-items: center;
   padding: 20px;
   opacity: 1;
-  height: 100vh;
-  text-align: center;
-  background: #0f2027; /* fallback for old browsers */
-  background: -webkit-linear-gradient(
-    to right,
-    #2c5364,
-    #203a43,
-    #0f2027
-  ); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(
-    to right,
-    #2c5364,
-    #203a43,
-    #0f2027
-  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-}
-
-.about-header {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-  opacity: 1;
-  height: 100vh;
+  height: 80vh;
   text-align: center;
 }
 
-.about-header div {
-  width: 50vw;
-  padding: 0 2rem;
-}
-
-.about-header h2 {
-  color: white;
+.header-content {
+  color: black;
 }
 
 .header button {
@@ -94,17 +69,23 @@ body {
   outline: none;
 }
 
-.header h2,
-.header h4 {
-  color: #f9f9f9;
+.header h2 {
+  color: black;
   font-size: 2rem;
   font-weight: 600;
-  text-shadow: 1px 1px 4px #000;
 }
 
 .darken {
   background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
 }
+
+/*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
+/* About Page CSS  */
+/*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
+
+/*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
+/* Activity CSS  */
+/*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
 
 .main-container {
   height: 100vh;
@@ -115,18 +96,6 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
-  background: #e0eafc; /* fallback for old browsers */
-  background: -webkit-linear-gradient(
-    to right,
-    #cfdef3,
-    #e0eafc
-  ); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(
-    to right,
-    #cfdef3,
-    #e0eafc
-  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
 .main-container button {
@@ -141,6 +110,23 @@ body {
   text-align: center;
 }
 
+#no-auth {
+  display: block;
+  position: relative;
+  text-align: center;
+  height: 100%;
+  padding: 25%;
+}
+
+.table-container {
+  width: 100%;
+}
+
+@media only screen and (min-width: 768px) {
+  .table-container {
+    width: 75%;
+  }
+}
 /*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
 /* Footer CSS  */
 /*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
