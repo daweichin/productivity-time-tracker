@@ -1,6 +1,4 @@
 $("#btnSignUp").click(function() {
-  console.log("signing user up");
-
   var email = $("#txtEmail").val();
   var password = $("#txtPassword").val();
 
@@ -12,7 +10,14 @@ $("#btnSignUp").click(function() {
     data: data,
     dataType: "json",
     success: data => {
-      console.log("create success");
+      if (data == true) {
+        window.location.replace("/landing.html");
+      } else {
+        $("#errormsg").text(data.error);
+      }
+    },
+    error: data => {
+      $("#errormsg").text(data.error);
     }
   });
 });
@@ -31,7 +36,6 @@ $("#btnLogin").click(function() {
     data: data,
     dataType: "json",
     success: function(data) {
-      console.log(data.success);
       if (data.success) {
         console.log(data.email + " is logged in");
         window.location.replace("/landing.html");

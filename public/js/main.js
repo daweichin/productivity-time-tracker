@@ -7,6 +7,8 @@ var session = new session();
 // user variables
 var sessionOn;
 var userId;
+
+//tempdata represents current user state
 var tempData = {};
 
 // initializing functions
@@ -14,16 +16,18 @@ var tempData = {};
 // if the state is true then btn should be 'stop'
 checkCurrentUser();
 
-console.log(tempData);
 // if a session is in progress, change the btn to red
 
 toggleBtn.addEventListener("click", function() {
   var timer = document.getElementById("timer");
-  this.classList.toggle("btn-danger");
 
   checkCurrentUser();
   sessionOn = tempData.sessionOn;
+  startactivity(sessionOn);
+});
 
+function startactivity(sessionOn) {
+  // if sessionOn is not true, start session
   if (!sessionOn) {
     // initialize starting variables
     sessionType = getSessionType();
@@ -47,15 +51,9 @@ toggleBtn.addEventListener("click", function() {
     // duration = session.calculateDuration();
 
     // make ajax call to end session
-    // once session is ended: increment sessionId by 1
     endSession(endTime);
-
-    //updating UI on screen
-
-    // resetting the variables
-    sessionOn = false;
   }
-});
+}
 
 function getSessionType() {
   return $("#sessionDropdown option:selected").val();
@@ -72,7 +70,6 @@ function checkCurrentUser() {
         $("#currentUser").text("The current user is " + data.userEmail);
         $("#no-auth").css({ display: "none" });
         $("#btnSignIn").css({ display: "none" });
-        getSessions();
 
         //update temp variables
         handleData(data);
@@ -86,22 +83,19 @@ function checkCurrentUser() {
 }
 
 function handleData(data) {
-  console.log("checking current user");
   tempData = {
     sessionOn: data.sessionOn,
     sessionId: data.sessionId,
     userId: data.userId
   };
-  console.log(tempData);
   if (tempData.sessionOn == true) {
-    toggleBtn.classList.add("btn-danger");
     toggleBtn.textContent = "Stop";
+    $("#timer").text("There is an ongoing session");
   }
 }
 
-//what is this?
+// sign out
 $("#btnSignOut").click(function() {
-  console.log("sign out clicked");
   $.ajax({
     url: "signout",
     type: "POST",
@@ -124,9 +118,7 @@ function startSession(startTime, sessionType, sessionId, date, userId) {
       userId: userId
     },
     dataType: "json",
-    success: function(data) {
-      console.log("the current sesssion is " + data);
-    }
+    success: function(data) {}
   });
 }
 
@@ -188,15 +180,14 @@ function getSessions() {
       ("</td></tr>");
       $("table tbody").append(markup);
     }
-
-    console.log(my_obj_str);
   }
 }
 
 checkbtn.addEventListener("click", function() {
+  $("table tbody").html("");
   getSessions();
 });
 
-$("#reset").on("click", () => {
-  $("table tbody").html("");
-});
+// $("#reset").on("click", () => {
+//   $("table tbody").html("");
+// });

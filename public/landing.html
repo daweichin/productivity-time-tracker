@@ -17,6 +17,8 @@
       integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
       crossorigin="anonymous"
     />
+    <script src="https://kit.fontawesome.com/cb31240e58.js" crossorigin="anonymous"></script>
+
     <link rel="stylesheet" href="css/style.css" />
     <link
       href="https://fonts.googleapis.com/css?family=Montserrat&display=swap"
@@ -32,7 +34,7 @@
       id="mainNav"
       class="navbar navbar-expand-lg navbar-dark navbar-fixed-top"
     >
-      <a class="navbar-brand" href="index.html">Navbar</a>
+      <a class="navbar-brand" href="index.html">PTM</a>
       <button
         class="navbar-toggler"
         type="button"
@@ -61,17 +63,17 @@
             <a id="btnSignIn" class="nav-link" href="login.html">Login</a>
           </li>
           <li class="nav-item active">
-            <a class="nav-link" href="landing.html">Profile</a>
+            <a class="nav-link" href="landing.html">Session</a>
           </li>
         </ul>
       </div>
     </nav>
     <div id="no-auth">
-      <h1>Log in to be able to store sessions</h1>
+      <h2>Log in to be able to store sessions</h2>
     </div>
     <div class="main" section="main">
       <div class="main-container">
-        <h1 id="currentUser"></h1>
+        <h2 id="currentUser"></h2>
         <hr />
         <form id="sessionType" action="" class="form-group">
           <select
@@ -85,7 +87,7 @@
           </select>
         </form>
         <button id="toggle" class="btn btn-success">Start</button>
-        <h1 id="timer"></h1>
+        <h2 id="timer"></h2>
         <div class="btnGroup">
           <button id="check" class="btn btn-secondary ">
             Check all sessions
@@ -93,9 +95,7 @@
           <button id="reset" class="btn btn-danger ">
             Reset Text
           </button>
-          <!-- <button id="btnSignOut" class="btn btn-secondary hide">
-            Log Out
-          </button> -->
+
         </div>
         <p></p>
         <div class="table-container">
@@ -116,12 +116,16 @@
       </div>
     </div>
 
-    <section id="footer">
-      <div class="footer">
-        Designed by DC
+    
+    <div class="footer">
+      Website by DC
+      <div id="social-links">
+        <a href="https://github.com/domainance" target="_blank"
+          ><i class="fab fa-github"></i
+        ></a> 
       </div>
-    </section>
-
+    </div>
+  </div>
     <script type="text/javascript" src="js/session.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
     <script type="text/javascript" src="js/login.js"></script>

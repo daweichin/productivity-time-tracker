@@ -5,23 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link
-      rel="icon"
-      type="image/png"
-      sizes="32x32"
-      href="img/favicon_io/favicon.ico"
-    />
-    <link rel="stylesheet" href="css/fontawesome-free-5.12.0-web/css/all.css" />
-    <link rel="stylesheet" href="css/style.css" />
-    <link
-      href="https://fonts.googleapis.com/css?family=Montserrat&display=swap"
-      rel="stylesheet"
-    />
-    <link
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
       rel="stylesheet"
       integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
       crossorigin="anonymous"
     />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="img/favicon_io/favicon.ico"
+    />
+    <script
+      src="https://kit.fontawesome.com/cb31240e58.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <link rel="stylesheet" href="css/style.css" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Montserrat&display=swap"
+      rel="stylesheet"
+    />
+    <script type="text/javascript" src="lib/jquery-3.4.1.min.js"></script>
+
     <script src="lib/moment.min.js"></script>
     <title>Productivity Tracker</title>
   </head>
@@ -30,7 +36,7 @@
       id="mainNav"
       class="navbar navbar-expand-lg navbar-dark navbar-fixed-top"
     >
-      <a class="navbar-brand" href="index.html">Navbar</a>
+      <a class="navbar-brand" href="index.html">PTM</a>
       <button
         class="navbar-toggler"
         type="button"
@@ -44,12 +50,12 @@
       </button>
       <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
         <ul class="navbar-nav">
-          <li class="nav-item active">
+          <li class="nav-item ">
             <a class="nav-link" href="index.html"
               >Home <span class="sr-only">(current)</span></a
             >
           </li>
-          <li class="nav-item">
+          <li class="nav-item active">
             <a class="nav-link" href="about.html">About</a>
           </li>
           <li class="nav-item">
@@ -61,7 +67,7 @@
 
     <section class="about">
       <div class="header">
-        <h2>About this app</h2>
+        <h2>About</h2>
         <div class="20">
           This app was built to track how much time I spend doing a specific
           type of activity. In particular this was motivated by a want to track
@@ -88,10 +94,12 @@
     <div class="footer">
       Website by DC
       <div id="social-links">
-        <a href="https://github.com/domainance"
+        <a href="https://github.com/domainance" target="_blank"
           ><i class="fab fa-github"></i
         ></a>
       </div>
     </div>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
   </body>
 </html>

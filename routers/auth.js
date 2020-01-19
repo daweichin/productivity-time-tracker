@@ -43,13 +43,15 @@ router.post("/createUser", function(req, res) {
           sessionId: 0
         });
       console.log("user signed up ");
-      // TODO:: Implement res.redirect()
+      // TODO: dont understand why no /public
+      res.send(true);
     })
     .catch(function(error) {
       // Handle Errors here.
       var errorCode = error.code;
       var errorMessage = error.message;
       // ...
+      console.log(errorMessage);
       res.send({ error: errorMessage });
     });
 });

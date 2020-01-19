@@ -62,6 +62,8 @@ router.post("/startSession", function(req, res) {
   // assign req params to temp object
   trackObject.sessionType = req.body.sessionType;
   trackObject.trackstart = req.body.startTime;
+  trackObject.trackend = "Session Ongoing";
+  trackObject.duration = "---";
   trackObject.sessionId = req.body.sessionId;
   trackObject.date = req.body.date;
   trackObject.userId = req.body.userId;
@@ -97,6 +99,7 @@ router.post("/endSession", function(req, res) {
 
   // calculate duration here
 
+  console.log(trackObject);
   var duration = moment
     .utc(
       moment(trackObject.trackend, "HH:mm:ss").diff(
@@ -122,12 +125,12 @@ router.post("/endSession", function(req, res) {
 
   // increment session by 1
   trackObject.sessionId = parseInt(trackObject.sessionId) + 1;
+  console.log("line 127: " + trackObject.sessionId);
   firebase
     .database()
     .ref("users/" + auth.currentUser.uid + "/sessionId")
     .set(trackObject.sessionId);
 
-  console.log("end object:" + trackObject);
   res.send(trackObject);
 });
 

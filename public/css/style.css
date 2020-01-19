@@ -75,6 +75,14 @@ body {
   font-weight: 600;
 }
 
+@media only screen and (min-width: 768px) {
+  .header h2 {
+    color: black;
+    font-size: 4rem;
+    font-weight: 600;
+  }
+}
+
 .darken {
   background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
 }
@@ -127,19 +135,6 @@ body {
     width: 75%;
   }
 }
-/*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
-/* Footer CSS  */
-/*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
-.footer {
-  height: 10vh;
-  background-color: white;
-  color: black;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-}
 
 /*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
 /* Login CSS  */
@@ -186,4 +181,23 @@ button {
 
 .login-form h4 {
   font-size: 1rem;
+}
+
+/*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
+/* Footer CSS  */
+/*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
+.footer {
+  height: 10vh;
+  background-color: black;
+  color: white;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.fab {
+  margin: 10px;
+  color: white;
 }
