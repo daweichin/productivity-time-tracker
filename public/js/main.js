@@ -91,6 +91,7 @@ function handleData(data) {
   if (tempData.sessionOn == true) {
     toggleBtn.textContent = "Stop";
     $("#timer").text("There is an ongoing session");
+    $("#toggle").addClass("btn-danger");
   }
 }
 
@@ -134,6 +135,7 @@ function endSession(endTime) {
     success: function(data) {
       timer.textContent = "The session time was +" + data.duration;
       toggleBtn.textContent = "Start";
+      $("#toggle").removeClass("btn-danger");
     }
   });
 }
