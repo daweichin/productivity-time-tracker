@@ -135,14 +135,18 @@ router.post("/endSession", function(req, res) {
 });
 
 router.get("/getSession", function(req, res) {
-  userId = auth.currentUser.uid;
-  var test = database.ref("sessions/" + userId);
-  test.once("value", function(snapshot) {
-    array = [];
-    array.push(snapshot.val());
-    console.log(array);
-    res.json(array);
-  });
+  try {
+    userId = auth.currentUser.uid;
+    var test = database.ref("sessions/" + userId);
+    test.once("value", function(snapshot) {
+      array = [];
+      array.push(snapshot.val());
+      console.log(array);
+      res.send(array);
+    });
+  } catch (error) {
+    res.send(error);
+  }
 });
 
 function writeUserData(userId, name, email, imageUrl) {

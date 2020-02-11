@@ -27,7 +27,7 @@ function session() {
   // };
 
   this.date = function() {
-    date = moment().format("Do MMMM YYYY");
+    date = moment().format("DD-MM-YYYY");
     return date;
   };
 

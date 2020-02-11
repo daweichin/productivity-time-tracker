@@ -1,6 +1,7 @@
 var timer = document.getElementById("timer");
 var toggleBtn = document.getElementById("toggle");
-var checkbtn = document.getElementById("check");
+var checkBtn = document.getElementById("checkBtn");
+var dateBtn = document.getElementById("dateBtn");
 
 var session = new session();
 
@@ -48,8 +49,6 @@ function startactivity(sessionOn) {
   } else {
     // getting the final time and updating ui
     endTime = session.stop();
-    // duration = session.calculateDuration();
-
     // make ajax call to end session
     endSession(endTime);
   }
@@ -57,6 +56,10 @@ function startactivity(sessionOn) {
 
 function getSessionType() {
   return $("#sessionDropdown option:selected").val();
+}
+
+function getDate() {
+  return $("#dateDropdown option:selected").val();
 }
 
 function checkCurrentUser() {
@@ -76,7 +79,7 @@ function checkCurrentUser() {
       } else {
         $("#btnSignOut").css({ display: "none" });
         $("#btnSignIn").css({ display: "block" });
-        $(".main-container").css({ display: "none" });
+        $(".main").css({ display: "none" });
       }
     }
   });
@@ -141,55 +144,92 @@ function endSession(endTime) {
 }
 
 // Retrieve sessions from a given date
+function getSessionsFromDate(array, temp = []) {
+  array = array[0];
+  array.forEach(element => {
+    selectedDate = getDate();
+    date = element.date;
+    if (date == selectedDate) {
+      element = JSON.stringify(element);
+      temp.push(JSON.parse(element));
+    }
+  });
+  return temp;
+}
 
+// retrieves all sessions
 function getSessions() {
   // ajax call to get data from firebase
   $.ajax({
     url: "getSession",
     type: "GET",
-    dataType: "json",
     success: function(data) {
-      updateSessionText(data);
+      // updates table with data
+      temp = [];
+      array = data[0];
+      array.forEach(element => {
+        element = JSON.stringify(element);
+        temp.push(JSON.parse(element));
+      });
+
+      updateSessionText(temp);
+    },
+    error: function(error) {
+      console.log(error);
     }
   });
-
-  function updateSessionText(data) {
-    var my_obj_str = data;
-    var arr = my_obj_str[0];
-
-    // mapping props to table --> probably could have used .map() function
-    for (var i = 0; i < arr.length; i++) {
-      props = arr[i];
-      var id = props.sessionId;
-      var duration = props.duration;
-      var date = props.date;
-      var start = props.trackstart;
-      var end = props.trackend;
-      var type = props.sessionType;
-      markup =
-        "<tr><td>" +
-        id +
-        "</td><td>" +
-        date +
-        "</td><td>" +
-        start +
-        "</td><td>" +
-        end +
-        "</td><td>" +
-        duration +
-        "</td><td>" +
-        type;
-      ("</td></tr>");
-      $("table tbody").append(markup);
-    }
-  }
 }
 
-checkbtn.addEventListener("click", function() {
+checkBtn.addEventListener("click", function() {
   $("table tbody").html("");
   getSessions();
 });
 
-// $("#reset").on("click", () => {
-//   $("table tbody").html("");
-// });
+dateBtn.addEventListener("click", function() {
+  $("table tbody").html("");
+  $.ajax({
+    url: "getSession",
+    type: "GET",
+    success: function(data) {
+      // get relevant data from specific date
+      dateArray = getSessionsFromDate(data, (temp = []));
+      // update the table with new data
+      updateSessionText(dateArray);
+    },
+    error: function(error) {
+      console.log(error);
+    }
+  });
+});
+
+// expects an array with json strings
+function updateSessionText(data) {
+  var arr = data;
+
+  // mapping props to table --> probably could have used .map() function
+  for (var i = 0; i < arr.length; i++) {
+    props = arr[i];
+
+    var id = props.sessionId;
+    var duration = props.duration;
+    var date = props.date;
+    var start = props.trackstart;
+    var end = props.trackend;
+    var type = props.sessionType;
+    markup =
+      "<tr><td>" +
+      id +
+      "</td><td>" +
+      date +
+      "</td><td>" +
+      start +
+      "</td><td>" +
+      end +
+      "</td><td>" +
+      duration +
+      "</td><td>" +
+      type;
+    ("</td></tr>");
+    $("table tbody").append(markup);
+  }
+}
