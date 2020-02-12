@@ -50,19 +50,18 @@ body {
 }
 
 .header button {
-  width: fit-content;
+  width: 150px;
   height: fit-content;
   padding: 10px 30px;
-  background: grey;
-  border: 3px solid grey;
-  color: white;
+  background: white;
+  border: 3px solid black;
+  color: black;
   text-transform: uppercase;
-  border-radius: 10px;
   transition: 0.4s ease;
 }
 
 .header button:hover {
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(0, 0, 0, 0.2);
 }
 
 .header button:focus {
@@ -78,7 +77,7 @@ body {
 @media only screen and (min-width: 768px) {
   .header h2 {
     color: black;
-    font-size: 4rem;
+    font-size: 3rem;
     font-weight: 600;
   }
 }
@@ -128,6 +127,14 @@ body {
 
 .table-container {
   width: 100%;
+}
+
+#currentUser {
+  text-align: center;
+}
+
+#dateInput {
+  border: 1px solid black;
 }
 
 @media only screen and (min-width: 768px) {
