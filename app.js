@@ -5,11 +5,6 @@ const https = require("https");
 
 const fs = require("fs");
 
-const options = {
-  key: fs.readFileSync("key.pem"),
-  cert: fs.readFileSync("cert.pem")
-};
-
 const auth = require("./routers/auth");
 const session = require("./routers/session");
 
