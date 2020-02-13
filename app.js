@@ -1,6 +1,14 @@
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
+const https = require("https");
+
+const fs = require("fs");
+
+const options = {
+  key: fs.readFileSync("key.pem"),
+  cert: fs.readFileSync("cert.pem")
+};
 
 const auth = require("./routers/auth");
 const session = require("./routers/session");
@@ -17,16 +25,13 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/", auth);
 app.use("/", session);
 
-// middleware test
-app.use(function(req, res, next) {
-  console.log("Time:", Date.now());
-  next();
-});
-
+var options = {
+  key: fs.readFileSync("/etc/letsencrypt/live/davidchintech.com/privkey.pem"),
+  cert: fs.readFileSync("/etc/letsencrypt/live/davidchintech.com/cert.pem"),
+  ca: fs.readFileSync("/etc/letsencrypt/live/davidchintech.com/chain.pem")
+};
 // Make server listen for requests
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 443;
 
-app.listen(port, () => {
-  console.log("server is running on port " + port);
-});
+https.createServer(options, app).listen(port);
