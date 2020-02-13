@@ -28,7 +28,6 @@ router.get("/test", (req, res) => res.json({ msg: "Users Works" }));
 router.post("/createUser", function(req, res) {
   userEmail = req.body.userEmail;
   userPassword = req.body.userPassword;
-
   auth
     .createUserWithEmailAndPassword(userEmail, userPassword)
     .then(function(user) {

@@ -59,7 +59,7 @@ function getSessionType() {
 }
 
 function getDate() {
-  return $("#dateInput").val();
+  return $("#dateDropdown option:selected").val();
 }
 
 function checkCurrentUser() {
@@ -70,7 +70,7 @@ function checkCurrentUser() {
     success: function(data) {
       if (data.userEmail != null) {
         //update UI
-        $("#currentUser").text("Logged in as " + data.userEmail);
+        $("#currentUser").text("The current user is " + data.userEmail);
         $("#no-auth").css({ display: "none" });
         $("#btnSignIn").css({ display: "none" });
 
@@ -89,10 +89,8 @@ function handleData(data) {
   tempData = {
     sessionOn: data.sessionOn,
     sessionId: data.sessionId,
-    userId: data.userId,
-    dateArray: data.dateArray
+    userId: data.userId
   };
-
   if (tempData.sessionOn == true) {
     toggleBtn.textContent = "Stop";
     $("#timer").text("There is an ongoing session");
@@ -124,9 +122,7 @@ function startSession(startTime, sessionType, sessionId, date, userId) {
       userId: userId
     },
     dataType: "json",
-    success: function(data) {
-      console.log("working");
-    }
+    success: function(data) {}
   });
 }
 
@@ -197,7 +193,6 @@ dateBtn.addEventListener("click", function() {
     success: function(data) {
       // get relevant data from specific date
       dateArray = getSessionsFromDate(data, (temp = []));
-      console.log(tempData.dateArray);
       // update the table with new data
       updateSessionText(dateArray);
     },
@@ -238,20 +233,3 @@ function updateSessionText(data) {
     $("table tbody").append(markup);
   }
 }
-
-// // dropdown form code
-// $("#dateBtn").on("click", () => {
-//   console.log(tempData.dateArray);
-//   input = $('#')
-//   selectDates(input);
-// });
-
-// function selectDates(element) {
-//   $select.append(
-//     $("<option />")
-//       .val(element)
-//       .text(element)
-//   );
-// }
-
-// $select = $("#dateDropdown");

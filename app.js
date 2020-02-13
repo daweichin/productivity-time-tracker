@@ -1,9 +1,6 @@
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
-const https = require("https");
-
-const fs = require("fs");
 
 const auth = require("./routers/auth");
 const session = require("./routers/session");
@@ -20,13 +17,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/", auth);
 app.use("/", session);
 
-var options = {
-  key: fs.readFileSync("/etc/letsencrypt/live/davidchintech.com/privkey.pem"),
-  cert: fs.readFileSync("/etc/letsencrypt/live/davidchintech.com/cert.pem"),
-  ca: fs.readFileSync("/etc/letsencrypt/live/davidchintech.com/chain.pem")
-};
 // Make server listen for requests
 
-const port = process.env.PORT || 443;
+const port = 5000;
 
-https.createServer(options, app).listen(port);
+app.listen(port, () => {
+  console.log("server listening on " + port);
+});

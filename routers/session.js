@@ -52,6 +52,7 @@ router.get("/checkCurrentUser", function(req, res) {
 
 // Post Request
 // Write user data into database
+// Needs a rename
 
 //store sessionId variable on the database
 var trackObject = {};
@@ -74,27 +75,6 @@ router.post("/startSession", function(req, res) {
     .database()
     .ref("users/" + auth.currentUser.uid + "/sessionOn")
     .set(true);
-
-  // check if the new date is in datearray, and if not add it to the datearray
-  // dateArray = [];
-  // firebase
-  //   .database()
-  //   .ref("users/" + auth.currentUser.uid + "/dateArray")
-  //   .once("value")
-  //   .then(function(snapshot) {
-  //     var dateArray = snapshot.val() || "empty";
-  //     console.log(dateArray);
-  //     for (var i = 0; i < dateArray.length; i++) {
-  //       if (trackObject.date !== dateArray[i]) {
-  //         dateArray.push(trackObject.date);
-  //       }
-  //     }
-  //   });
-
-  // firebase
-  //   .database()
-  //   .ref("users/" + auth.currentUser.uid + "/dateArray")
-  //   .set(dateArray);
 
   // writing request to firebase sessions node
   firebase
