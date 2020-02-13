@@ -1,6 +1,12 @@
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
+<<<<<<< HEAD
+const https = require("https");
+
+const fs = require("fs");
+=======
+>>>>>>> parent of fd39a1c... added https
 
 const auth = require("./routers/auth");
 const session = require("./routers/session");
@@ -17,10 +23,16 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/", auth);
 app.use("/", session);
 
+// middleware test
+app.use(function(req, res, next) {
+  console.log("Time:", Date.now());
+  next();
+});
+
 // Make server listen for requests
 
-const port = 5000;
+const port = process.env.PORT || 3000;
 
 app.listen(port, () => {
-  console.log("server listening on " + port);
+  console.log("server is running on port " + port);
 });
