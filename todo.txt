@@ -1,28 +1,9 @@
 Creating a simple website that will track the time and classify the type of work that was undertaken
 
-Done
-
-1. Make it possible to start a session which generates the current time, and add a stop button to end the session
-
-2. Calculate the difference to get total session time
-
-3. Store the session time and label it as either active or passive learning OR "eating" OR "leisure" 
-
-  3c. user input dropdown box to select or 'other' where a user can write their own type of time
-
-In Progress
-
-Core TODO
-
--- Fix up UI and make things look good
--- Format data properly for given day to 
--- Simple chart comparing %'s between different categories of time
--- When a user logs in, if their sessionOn = true, toggle the start button
-
-
-Features TODO
-
--- Make it possible to load data from specific day and create graphs / analytics
-
+Todos: 
+- Show one weeks durations in stacked bar chart
+- Move logged in user to navbar
+- Add FB/Google login 
+- General UI Cleanup (low priority)
 
 

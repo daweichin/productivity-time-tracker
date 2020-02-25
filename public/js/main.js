@@ -16,16 +16,53 @@ var tempData = {};
 // check for current user and current session state
 // if the state is true then btn should be 'stop'
 checkCurrentUser();
+getTimes();
 
-// if a session is in progress, change the btn to red
-
+// Event Handlers and Listeners
 toggleBtn.addEventListener("click", function() {
   var timer = document.getElementById("timer");
 
   checkCurrentUser();
+
   sessionOn = tempData.sessionOn;
   startactivity(sessionOn);
 });
+
+// sign out
+$("#btnSignOut").click(function() {
+  $.ajax({
+    url: "signout",
+    type: "POST",
+    success: () => {
+      checkCurrentUser();
+    }
+  });
+});
+
+checkBtn.addEventListener("click", function() {
+  $("table tbody").html("");
+  getAllSessions();
+});
+
+dateBtn.addEventListener("click", function() {
+  $("table tbody").html("");
+  $.ajax({
+    url: "getSession",
+    type: "GET",
+    success: function(data) {
+      // get relevant data from specific date
+      dateArray = getSessionsFromDate(data, (temp = []));
+      console.log(tempData.dateArray);
+      // update the table with new data
+      updateSessionText(dateArray);
+    },
+    error: function(error) {
+      console.log(error);
+    }
+  });
+});
+
+// Helper Functions
 
 function startactivity(sessionOn) {
   // if sessionOn is not true, start session
@@ -49,6 +86,8 @@ function startactivity(sessionOn) {
   } else {
     // getting the final time and updating ui
     endTime = session.stop();
+    getTimes();
+
     // make ajax call to end session
     endSession(endTime);
   }
@@ -99,17 +138,6 @@ function handleData(data) {
     $("#toggle").addClass("btn-danger");
   }
 }
-
-// sign out
-$("#btnSignOut").click(function() {
-  $.ajax({
-    url: "signout",
-    type: "POST",
-    success: () => {
-      checkCurrentUser();
-    }
-  });
-});
 
 // start session gets called when button is clicked
 function startSession(startTime, sessionType, sessionId, date, userId) {
@@ -162,7 +190,7 @@ function getSessionsFromDate(array, temp = []) {
 }
 
 // retrieves all sessions
-function getSessions() {
+function getAllSessions() {
   // ajax call to get data from firebase
   $.ajax({
     url: "getSession",
@@ -183,29 +211,6 @@ function getSessions() {
     }
   });
 }
-
-checkBtn.addEventListener("click", function() {
-  $("table tbody").html("");
-  getSessions();
-});
-
-dateBtn.addEventListener("click", function() {
-  $("table tbody").html("");
-  $.ajax({
-    url: "getSession",
-    type: "GET",
-    success: function(data) {
-      // get relevant data from specific date
-      dateArray = getSessionsFromDate(data, (temp = []));
-      console.log(tempData.dateArray);
-      // update the table with new data
-      updateSessionText(dateArray);
-    },
-    error: function(error) {
-      console.log(error);
-    }
-  });
-});
 
 // expects an array with json strings
 function updateSessionText(data) {
@@ -239,19 +244,92 @@ function updateSessionText(data) {
   }
 }
 
-// // dropdown form code
-// $("#dateBtn").on("click", () => {
-//   console.log(tempData.dateArray);
-//   input = $('#')
-//   selectDates(input);
-// });
+// Sum up duration for each date categorized on type of session for one week
 
-// function selectDates(element) {
-//   $select.append(
-//     $("<option />")
-//       .val(element)
-//       .text(element)
-//   );
+// Chart.js
+
+var ctx = document.getElementById("myChart");
+
+// initialize one weeks worth of dates to pass in as chart labels
+tempLabels = ["Active", "Passive", "Chilling", "Other"];
+// function lastWeekDates() {
+//   for (var i = 7; i > 0; i--) {
+//     // get one weeks worth of dates
+//     date = moment()
+//       .day(-i)
+//       .format("DD-MM-YYYY");
+//     temp.push(date);
+//   }
 // }
+function getTimes() {
+  $.ajax({
+    url: "sumDuration",
+    type: "GET",
+    success: data => {
+      console.log(data);
+      var temp = [];
+      // could map from templabels
+      temp[0] = data["Active"];
+      temp[1] = data["Passive"];
+      temp[2] = data["Chilling"];
+      temp[3] = data["Other"];
 
-// $select = $("#dateDropdown");
+      console.log(temp);
+      createChart(temp);
+    },
+    error: data => {
+      $("#errormsg").text(data.error);
+    }
+  });
+}
+
+function createChart(temp) {
+  var myChart = new Chart(ctx, {
+    type: "bar",
+    data: {
+      labels: tempLabels,
+      datasets: [
+        {
+          label: "Time Data",
+          data: temp,
+          backgroundColor: [
+            "rgba(255, 99, 132, 0.2)",
+            "rgba(54, 162, 235, 0.2)",
+            "rgba(255, 206, 86, 0.2)",
+            "rgba(75, 192, 192, 0.2)",
+            "rgba(153, 102, 255, 0.2)",
+            "rgba(255, 159, 64, 0.2)"
+          ],
+          borderColor: [
+            "rgba(255, 99, 132, 1)",
+            "rgba(54, 162, 235, 1)",
+            "rgba(255, 206, 86, 1)",
+            "rgba(75, 192, 192, 1)",
+            "rgba(153, 102, 255, 1)",
+            "rgba(255, 159, 64, 1)"
+          ],
+          borderWidth: 1
+        }
+      ]
+    },
+    options: {
+      title: {
+        display: true,
+        text: "Time spent on each activity"
+      },
+      scales: {
+        yAxes: [
+          {
+            scaleLabel: {
+              display: true,
+              labelString: "minutes"
+            },
+            ticks: {
+              beginAtZero: true
+            }
+          }
+        ]
+      }
+    }
+  });
+}

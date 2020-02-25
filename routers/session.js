@@ -75,27 +75,6 @@ router.post("/startSession", function(req, res) {
     .ref("users/" + auth.currentUser.uid + "/sessionOn")
     .set(true);
 
-  // check if the new date is in datearray, and if not add it to the datearray
-  // dateArray = [];
-  // firebase
-  //   .database()
-  //   .ref("users/" + auth.currentUser.uid + "/dateArray")
-  //   .once("value")
-  //   .then(function(snapshot) {
-  //     var dateArray = snapshot.val() || "empty";
-  //     console.log(dateArray);
-  //     for (var i = 0; i < dateArray.length; i++) {
-  //       if (trackObject.date !== dateArray[i]) {
-  //         dateArray.push(trackObject.date);
-  //       }
-  //     }
-  //   });
-
-  // firebase
-  //   .database()
-  //   .ref("users/" + auth.currentUser.uid + "/dateArray")
-  //   .set(dateArray);
-
   // writing request to firebase sessions node
   firebase
     .database()
@@ -167,6 +146,41 @@ router.get("/getSession", function(req, res) {
   } catch (error) {
     res.send(error);
   }
+});
+
+// sumDurations for specific user
+function sumDuration(sessionType) {
+  userId = auth.currentUser.uid;
+  var ref = firebase.database().ref("sessions/" + userId);
+  var sumMinutes = 0;
+  ref.once("value", function(snapshot) {
+    // loop over each session
+    snapshot.forEach(function(childSnapshot) {
+      // if session types match up, get the duration and sum to sumMinutes variable
+      if (childSnapshot.val().sessionType === sessionType) {
+        stype = childSnapshot.val().sessionType;
+
+        // create a moment object
+        let test = moment(childSnapshot.val().duration, "HH:mm:ss");
+        // convert moment object to minutes
+        sumMinutes += test.seconds() / 60 + test.minutes() + 60 * test.hours();
+      }
+    });
+    console.log(stype, sumMinutes);
+    data[stype] = sumMinutes;
+  });
+}
+var data = {};
+
+router.get("/sumDuration", function(req, res) {
+  sumDuration("Active"),
+    sumDuration("Passive"),
+    sumDuration("Chilling"),
+    sumDuration("Other");
+  setTimeout(function() {
+    console.log(data);
+    res.send(data);
+  }, 1000);
 });
 
 function writeUserData(userId, name, email, imageUrl) {

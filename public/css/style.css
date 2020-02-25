@@ -137,10 +137,18 @@ body {
   border: 1px solid black;
 }
 
+.table-container {
+  overflow: auto;
+}
+
 @media only screen and (min-width: 768px) {
   .table-container {
     width: 75%;
   }
+}
+
+.chart {
+  padding: 5%;
 }
 
 /*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */

@@ -1,12 +1,9 @@
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
-<<<<<<< HEAD
 const https = require("https");
 
 const fs = require("fs");
-=======
->>>>>>> parent of fd39a1c... added https
 
 const auth = require("./routers/auth");
 const session = require("./routers/session");
